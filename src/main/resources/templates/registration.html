@@ -1,0 +1,60 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Sign Up</title>-->
+<!--</head>-->
+<!--<body>-->
+
+<!--<h2>Sign Up</h2>-->
+<!--<br><br>-->
+
+<!--<div>-->
+<!--    <form name="form" th:action="@{/register}" method="post" th:object="${user}">-->
+<!--        <div>-->
+<!--            <label for="username">Username</label>-->
+<!--            <input type="text" id="username" name="username" th:field="*{username}"/>-->
+<!--        </div>-->
+<!--        <br><br>-->
+<!--        <div>-->
+<!--            <label for="password">Password</label>-->
+<!--            <input type="password" id="password" name="password" th:field="*{password}"/>-->
+<!--        </div>-->
+<!--        <br><br>-->
+<!--        <div>-->
+<!--            <button type="submit">Sign Up</button>-->
+<!--        </div>-->
+<!--    </form>-->
+
+<!--    <br><br>-->
+<!--    <button onclick="window.location.href='/login'">Log In</button>-->
+<!--&lt;!&ndash;    <a href="/login">Log In</a>&ndash;&gt;-->
+<!--</div>-->
+
+<!--</body>-->
+<!--</html>-->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" th:href="@{/css/style_signup.css}">
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Sign Up</title>
+</head>
+
+<body>
+<div class="main">
+    <p class="sign" align="center">Sign Up</p>
+    <form class="form1" name="form" th:action="@{/register}" method="post">
+        <input class="un " type="text" id="username" name="username" align="center" placeholder="Enter username">
+        <input class="pass" type="password" id="password" name="password" align="center" placeholder="Create password">
+        <button class="submit" type = "submit" align="center">Create</button>
+        <br><br>
+    </form>
+    <button class="signin" onclick="window.location.href='/login'">Go to log in</button>
+
+</div>
+</body>
+</html>

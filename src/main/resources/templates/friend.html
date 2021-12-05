@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<table><tr>
+    <th>Gift</th>
+    <th>Price category</th>
+    <th></th>
+    </tr>
+    <tr th:each="row : ${gifts}">
+        <td th:text="${row.gift}"></td>
+        <td th:text="${row.price}"></td>
+    </tr>
+</table>
+
+<button onclick="window.location.href='/welcome'">Back</button>
+
+</body>
+</html>

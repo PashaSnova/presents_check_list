@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+
+<table >
+    <tr th:each="row : ${users}">
+        <td><a th:href="@{/{friendLink}(friendLink = ${row.username})}">
+            <span th:text="${row.username}"/></td>
+        <td>
+            <span th:if="${not service.hasFriend(current.username, row.username)}">
+            <form method="post" th:action="@{/addFriend}" >
+            <button type="submit" th:value="${row.username}" th:name="friendUsername">Add</button>
+            </span>
+            </form>
+        </td>
+    </tr>
+</table>
+
+
+</body>
+</html>
