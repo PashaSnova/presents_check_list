@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface UserService {
 
-    void register(User user) throws UserAlreadyExistsException;
+    void register(User user) throws Exception;
 
     void addGift(User user, Gift gift);
 

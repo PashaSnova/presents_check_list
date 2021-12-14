@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.servlet.http.HttpServletRequest;
+
 @Controller
 public class RegistrationController {
 
@@ -21,17 +23,19 @@ public class RegistrationController {
     }
 
     @PostMapping("/register")
-    public String register(@ModelAttribute("user") User user, Model model){
+    public String register(@ModelAttribute("user") User user, Model model, HttpServletRequest request){
         try {
             userService.register(user);
-        } catch (UserAlreadyExistsException e) {
-            model.addAttribute("error", e.getMessage());
+            return "/login";
+        } catch (Exception e) {
+            request.getSession().setAttribute("error", e.getMessage());
+            return "redirect:/register";
         }
-        return "/login";
     }
 
     @GetMapping("/register")
-    public String register(Model model) {
+    public String register(Model model, HttpServletRequest request) {
+        model.addAttribute("regError", request.getSession().getAttribute("error"));
         model.addAttribute("user", new User("", ""));
         return "registration";
     }

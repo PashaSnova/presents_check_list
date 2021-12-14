@@ -9,6 +9,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.util.stream.Collectors;
+
 @Controller
 public class StartPageController {
 
@@ -23,9 +25,9 @@ public class StartPageController {
     public String start(Authentication auth, Model model)
     {
         User user = userService.getCurrentUser(auth);
-        model.addAttribute("gifts", user.getGifts());
+        model.addAttribute("gifts", user.getGifts().stream().sorted().collect(Collectors.toList()));
         model.addAttribute("newGift", new Gift());
-        model.addAttribute("friends", user.getFriends());
+        model.addAttribute("friends", user.getFriends().stream().sorted().collect(Collectors.toList()));
         return "index";
     }
 

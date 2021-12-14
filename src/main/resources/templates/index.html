@@ -1,25 +1,24 @@
-<html lang="en" xmlns:th="https://www.thymeleaf.org">
-
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
     <link rel="stylesheet" th:href="@{/css/style_index.css}">
     <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+    <meta charset="UTF-8">
     <title>Gifts</title>
 </head>
-
 <body>
 <header>
-    <h1>ProjectName</h1>
+    <h1>Present?<br>Simple!</h1>
+
     <form th:action="@{/logout}" method="post">
         <button class="logout" type="submit">Log out</button>
     </form>
 
     <form method="get" th:action="@{/search}">
         <input class="search" type="text" placeholder=" Search..." th:name="search" id="search">
-        <input class="search_button" type="submit"/>
+        <input class="search_button" type="submit" value="Find">
     </form>
-
 </header>
 
 <div>
@@ -48,18 +47,25 @@
             <option value="Medium (under 2500 roubles)">Medium (under 2500 roubles)</option>
             <option value="Expensive (under 5000 roubles)">Expensive (under 5000 roubles)</option>
         </select>
-    <button class="add_gift" type="submit">Add</button>
+        <button class="add_gift" type="submit">Add</button>
     </form>
 
-    <table  class="second_form">
-        <tr th:each="row : ${friends}">
-            <td><a th:href="@{/{friendLink}(friendLink = ${row.friend})}">
-                <span th:text="${row.friend}"></span></td>
-            <td><form method="post" th:action="@{/removeFriend}">
-                <button class="delete_friend_button" type="submit" th:value="${row.id}" th:name="friendId">Remove</button>
-            </form></td>
-        </tr>
-    </table>
+    <div class="second_form_scroll">
+        <table class="second_form">
+            <th align="center">Friend</th>
+            <th align="center"></th></tr>
+            <tr th:each="row : ${friends}">
+                <td class="friend_col1"><a th:href="@{/friend/{friendLink}(friendLink = ${row.friend})}">
+                    <span th:text="${row.friend}"/></a>
+                </td>
+                <td class="friend_col2"><form method="post" th:action="@{/removeFriend}">
+                    <button class="delete_friend_button" type="submit" th:value="${row.id}" th:name="friendId">Remove</button>
+                </form></td>
+            </tr>
+        </table>
+    </div>
+
+
 </div>
 </body>
 </html>

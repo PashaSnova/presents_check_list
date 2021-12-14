@@ -1,23 +1,29 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head>
+    <link rel="stylesheet" th:href="@{/css/style_friend.css}">
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Friend's gift list</title>
 </head>
 <body>
+<header>
+    <h1>Present?<br>Simple!</h1>
+</header>
 
-<table><tr>
-    <th>Gift</th>
-    <th>Price category</th>
-    <th></th>
+<div class="table_scroll">
+    <table class="table"><tr>
+        <th align="center">Gift</th>
+        <th align="center">Price category</th>
     </tr>
-    <tr th:each="row : ${gifts}">
-        <td th:text="${row.gift}"></td>
-        <td th:text="${row.price}"></td>
-    </tr>
-</table>
+        <tr th:each="row : ${gifts}">
+            <td class="col1" th:text="${row.gift}"></td>
+            <td class="col2" th:text="${row.price}"></td>
+        </tr>
+    </table>
+</div>
 
-<button onclick="window.location.href='/welcome'">Back</button>
+<button class="back" onclick="window.location.href='/welcome'">Back</button>
 
 </body>
 </html>

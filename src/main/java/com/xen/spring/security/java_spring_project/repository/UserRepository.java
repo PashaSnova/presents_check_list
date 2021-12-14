@@ -10,5 +10,7 @@ import java.util.List;
 @Transactional
 public interface UserRepository extends JpaRepository<User, String> {
 
+    User findByUsername(String username);
+
     List<User> findAllByUsernameStartingWithAndUsernameIsNot(String start, String currentUser);
 }

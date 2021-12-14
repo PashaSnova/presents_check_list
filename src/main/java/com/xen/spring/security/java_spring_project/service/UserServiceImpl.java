@@ -14,8 +14,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
 import java.util.List;
+import java.util.TreeSet;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -43,9 +43,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void register(User user) throws UserAlreadyExistsException {
+    public void register(User user) throws Exception {
         if (userRepository.existsById(user.getUsername()))
             throw new UserAlreadyExistsException("User with such username already exists");
+        if (user.getUsername() == null || user.getPassword() == null || user.getUsername().equals("") || user.getPassword().equals(""))
+            throw new Exception("Fields cannot be empty");
         Role role = new Role();
         role.setAuthority("ROLE_ORDINARY");
         role.setUser(user);
@@ -58,10 +60,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public void addGift(User user, Gift gift) {
         if (user.getGifts() == null)
-            user.setGifts(new HashSet<>());
-        user.getGifts().add(gift);
-        gift.setUsername(user.getUsername());
-        giftRepository.save(gift);
+            user.setGifts(new TreeSet<>());
+        if (gift.getGift() != null && !gift.getGift().equals("")) {
+            user.getGifts().add(gift);
+            gift.setUsername(user.getUsername());
+            giftRepository.save(gift);
+        }
     }
 
     @Override
@@ -79,7 +83,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void addFriend(User user, User friend) {
         if (user.getFriends() == null)
-            user.setFriends(new HashSet<>());
+            user.setFriends(new TreeSet<>());
         Friend f = new Friend();
         f.setUsername(user.getUsername());
         f.setFriend(friend.getUsername());
@@ -96,7 +100,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserByUsername(String username) {
-        return userRepository.findById(username).orElse(null);
+        return userRepository.findByUsername(username);
     }
 
     @Override

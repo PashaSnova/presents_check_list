@@ -1,26 +1,43 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head>
+    <link rel="stylesheet" th:href="@{/css/style_search.css}">
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Search</title>
 </head>
 <body>
+<header>
+    <h1>Present?<br>Simple!</h1>
 
+    <form method="get" th:action="@{/search}">
+        <input class="search" type="text" placeholder=" Search..." th:name="search" id="search">
+        <input class="search_button" type="submit" value="Find">
+    </form>
 
-<table >
-    <tr th:each="row : ${users}">
-        <td><a th:href="@{/{friendLink}(friendLink = ${row.username})}">
-            <span th:text="${row.username}"/></td>
-        <td>
-            <span th:if="${not service.hasFriend(current.username, row.username)}">
-            <form method="post" th:action="@{/addFriend}" >
-            <button type="submit" th:value="${row.username}" th:name="friendUsername">Add</button>
-            </span>
-            </form>
-        </td>
+</header>
+
+<div class="table_scroll">
+    <table class="table"><tr>
+        <th align="center">Username</th>
+        <th></th>
     </tr>
-</table>
+        <tr th:each="row : ${users}">
+            <td class="col1"><a th:href="@{/friend/{friendLink}(friendLink = ${row.username})}">
+                <span th:text="${row.username}"/></a></td>
+            <td class="col2">
+                <span th:if="${not service.hasFriend(current.username, row.username)}">
+                <form method="post" th:action="@{/addFriend}" >
+                <button class="delete_friend_button" type="submit" th:value="${row.username}" th:name="friendUsername">Add</button>
+                </form>
+                </span>
+            </td>
+        </tr>
+    </table>
+</div>
 
+<button class="back" onclick="window.location.href='/welcome'">Back</button>
 
 </body>
 </html>

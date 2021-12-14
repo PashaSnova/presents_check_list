@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletRequest;
+
 @Controller
 public class FriendsController {
 
@@ -26,11 +28,13 @@ public class FriendsController {
 
 
     @PostMapping("/addFriend")
-    public String addFriend(@RequestParam("friendUsername") String friendUsername, Authentication auth) {
+    public String addFriend(@RequestParam("friendUsername") String friendUsername,
+                            Authentication auth,
+                            HttpServletRequest request) {
         User current = userService.getCurrentUser(auth);
         User friend = userService.getUserByUsername(friendUsername);
         userService.addFriend(current, friend);
-        return "redirect:/welcome";
+        return "redirect:/search?search=" + request.getSession().getAttribute("requestParam");
     }
 
     @PostMapping("/removeFriend")
@@ -40,7 +44,7 @@ public class FriendsController {
         return "redirect:/welcome";
     }
 
-    @GetMapping("/{friendLink}")
+    @GetMapping("/friend/{friendLink}")
     public String friendsPage(@PathVariable("friendLink")String friendLink, Model model){
         User user = userService.getUserByUsername(friendLink);
         model.addAttribute("gifts", user.getGifts());
@@ -48,10 +52,15 @@ public class FriendsController {
     }
 
     @GetMapping("/search")
-    public String findUsers(@RequestParam("search") String start, Model model, Authentication auth) {
+    public String findUsers(@RequestParam("search") String start,
+                            Model model,
+                            Authentication auth,
+                            HttpServletRequest request) {
         model.addAttribute("current", userService.getCurrentUser(auth));
-        model.addAttribute("users", userService.findAllByUsernameStartingWithAndUsernameIsNot(start, auth));
+        model.addAttribute("users", userService
+                .findAllByUsernameStartingWithAndUsernameIsNot(start, auth));
         model.addAttribute("service", userService);
+        request.getSession().setAttribute("requestParam", start);
         return "search";
     }
 

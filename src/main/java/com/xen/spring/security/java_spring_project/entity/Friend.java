@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Table(name = "friends")
 @Entity
-public class Friend {
+public class Friend implements Comparable<Friend> {
 
     @Id
     @Column(name = "id")
@@ -49,6 +49,9 @@ public class Friend {
         this.friend = friend;
     }
 
-
+    @Override
+    public int compareTo(Friend o) {
+        return friend.compareTo(o.getFriend());
+    }
 }
 

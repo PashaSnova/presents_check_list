@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Table(name = "check_list")
 @Entity
-public class Gift {
+public class Gift implements Comparable<Gift> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -53,5 +53,10 @@ public class Gift {
 
     public int getId() {
         return id;
+    }
+
+    @Override
+    public int compareTo(Gift o) {
+        return gift.compareTo(o.getGift());
     }
 }
